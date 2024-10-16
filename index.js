@@ -1,3 +1,8 @@
 // Counter App
 
-document.getElementById("count-el").innerText = 5
+clicks = 0
+
+function increment() {
+    clicks++
+    document.getElementById("count-el").innerText = clicks
+}
