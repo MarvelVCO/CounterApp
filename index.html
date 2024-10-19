@@ -7,37 +7,37 @@
             <h1>Students entered:</h1>
             <h2 id="count-el">0</h2>
 
-            <div class="button-grid">
+            <div class="button-grid"> <!-- see index.css for explination -->
                 <div class="button-item">
-                    <button id="increment-btn" onclick="increment()">INCREMENT</button>
+                    <button id="increment-btn" onclick="increment()">INCREMENT</button> <!-- Increments the clicks on click -->
                 </div>
                 <div class="description-item">
-                    <p>Increase your count by the current click power</p>
+                    <p>Increase your count by the current click power</p> 
                 </div>
 
                 <div class="button-item">
-                    <button id="click-power-btn" onclick="upgradeClickPower()">UPGRADE CLICK POWER</button>
+                    <button id="click-power-btn" onclick="upgradeClickPower()">UPGRADE CLICK POWER</button> <!-- Increases amount that clicks go up by when pressing the INCREMENT button -->
                 </div>
                 <div class="description-item">
                     <p>Upgrade click power to increase clicks per press. Cost: <span id="increment-power-cost"></span></p>
                 </div>
 
                 <div class="button-item">
-                    <button id="save-btn" onclick="save()">Save</button>
+                    <button id="save-btn" onclick="save()">Save</button> <!-- Saves the clicks you currently have to be used later -->
                 </div>
                 <div class="description-item">
                     <p>Save the current clicks to total saved counts.</p>
                 </div>
 
                 <div class="button-item">
-                    <button id="cps-upgrade-btn" onclick="upgradeCPSPercentage()">UPGRADE CPS</button>
+                    <button id="cps-upgrade-btn" onclick="upgradeCPSPercentage()">UPGRADE CPS</button> <!-- Increases the percentage of saved clicks that you get per second-->
                 </div>
                 <div class="description-item">
                     <p>Upgrade the percentage of saved total that is automatically added per second. Cost: <span id="cps-upgrade-cost"></span></p>
                 </div>
             </div>
 
-            <div class="stats">
+            <div class="stats"> <!-- displays all relevant information for the game -->
                 <h4>Click power: <span id="click-power-display"></span></h4>
                 <h4>Saved counts: <span id="saved-counts"></span></h4>
                 <h4>Saved total: <span id="saved-total"></span></h4>

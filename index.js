@@ -21,7 +21,7 @@ cpsCostDisplay = document.getElementById("cps-upgrade-cost")
 cpsPercentageDisplay = document.getElementById("cps-percentage-display")
 cpsDisplay = document.getElementById("cps-display")
 
-displays = [
+displays = [ // Array of displays to make updating easier. Second value is set to a function that returns the value of the relevant variable.
     [clicksDisplay, () => Math.floor(clicks)],
     [powerCostDisplay, () => Math.floor(powerUpgradeCost)],
     [clickPowerDisplay, () => Math.floor(clickPower)],
@@ -32,7 +32,7 @@ displays = [
     [cpsDisplay, () => Math.floor(dcps)]
 ];
 
-function updateDisplays() {
+function updateDisplays() { // Iterates through all the displays in the array and sets their value to be the result of the function attatched to it
     for (let [displayElement, valueFunc] of displays) {
         displayElement.innerText = valueFunc();
     }
@@ -42,7 +42,7 @@ function increment() {
     clicks += clickPower
 }
 
-function upgradeClickPower() {
+function upgradeClickPower() { // Each upgrade makes your clicks 1 stronger and then multiplies it by 1.1 since if all I did was multiply it would be really bad to begin with
     if (clicks >= powerUpgradeCost) {
         clicks -= powerUpgradeCost
         clickPower = (clickPower + 1) * 1.1
@@ -50,7 +50,7 @@ function upgradeClickPower() {
     }
 }
 
-function upgradeCPSPercentage() {
+function upgradeCPSPercentage() { // cps represents the clicks you get per second, which is based off of an upgradable percentage of the total clicks you have saved
     if (clicks >= cpsUpgradeCost) {
         clicks -= cpsUpgradeCost
         cpsPercentage++
@@ -58,22 +58,22 @@ function upgradeCPSPercentage() {
     }
 }
 
-function autoIncrementByCPS() {
+function autoIncrementByCPS() { // Increments clicks by the total saved clicks multiplied by cps percentage
     clicks += (savedTotal * cpsPercentage) / 100
 }
 
-function save() {
+function save() { // Adds the saved click value to the array of saved clicks, and the save total
     savedCounts.push(Math.floor(clicks))
     savedTotal += clicks
     clicks = 0
 }
 
-function calculateCPS() {
+function calculateCPS() { // Calculates by checking how much your clicks have changed every second (cant show negative numbers)
     dcps = Math.max(Math.floor(clicks - lastClickCount), 0);
     lastClickCount = clicks;
 }
 
 
-setInterval(autoIncrementByCPS, 1000)
-setInterval(calculateCPS, 1000);
-setInterval(updateDisplays, 100);
+setInterval(autoIncrementByCPS, 1000) // Increments CPS by the value determined by the function every second
+setInterval(calculateCPS, 1000); // Sets the calculateCPS function to get the avg amount your clicks changed over a second (1000ms)
+setInterval(updateDisplays, 100); // Updates all the different numbers 10 times a second 
