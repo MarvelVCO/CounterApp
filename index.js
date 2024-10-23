@@ -1,15 +1,17 @@
 // Counter App
-savedCounts = []
-savedTotal = 0
-cpsPercentage = 5
-cpsUpgradeCost = 50 
 
-clicks = 0
-clickPower = 1
-powerUpgradeCost = 10
+// Loading all important values from memorey
+savedCounts = JSON.parse(localStorage.getItem("savedCounts")) || [];
+savedTotal = parseInt(localStorage.getItem("savedTotal")) || 0;
+cpsPercentage = parseInt(localStorage.getItem("cpsPercentage")) || 5;
+cpsUpgradeCost = parseInt(localStorage.getItem("cpsUpgradeCost")) || 50;
+
+clicks = parseInt(localStorage.getItem("clicks")) || 0;
+clickPower = parseFloat(localStorage.getItem("clickPower")) || 1;
+powerUpgradeCost = parseInt(localStorage.getItem("powerUpgradeCost")) || 10;
 
 lastClickCount = 0
-dcps = 0
+cps = 0
 
 // Displays
 clicksDisplay = document.getElementById("count-el")
@@ -29,13 +31,43 @@ displays = [ // Array of displays to make updating easier. Second value is set t
     [savedTotalDisplay, () => Math.floor(savedTotal)],
     [cpsCostDisplay, () => Math.floor(cpsUpgradeCost)],
     [cpsPercentageDisplay, () => Math.floor(cpsPercentage)],
-    [cpsDisplay, () => Math.floor(dcps)]
+    [cpsDisplay, () => Math.floor(cps)]
 ];
 
 function updateDisplays() { // Iterates through all the displays in the array and sets their value to be the result of the function attatched to it
     for (let [displayElement, valueFunc] of displays) {
         displayElement.innerText = valueFunc();
     }
+}
+
+function saveGame() { // Saves all the important values to localStorage
+    localStorage.setItem("clicks", clicks);
+    localStorage.setItem("clickPower", clickPower);
+    localStorage.setItem("powerUpgradeCost", powerUpgradeCost);
+    localStorage.setItem("savedCounts", JSON.stringify(savedCounts)); // Arrays need to be stored as JSON strings
+    localStorage.setItem("savedTotal", savedTotal);
+    localStorage.setItem("cpsPercentage", cpsPercentage);
+    localStorage.setItem("cpsUpgradeCost", cpsUpgradeCost);
+}
+
+function reset() { // resets all game data
+    localStorage.setItem("clicks", 0);
+    localStorage.setItem("clickPower", 1);
+    localStorage.setItem("powerUpgradeCost", 10);
+    localStorage.setItem("savedCounts", JSON.stringify([])); // Arrays need to be stored as JSON strings
+    localStorage.setItem("savedTotal", 0);
+    localStorage.setItem("cpsPercentage", 5);
+    localStorage.setItem("cpsUpgradeCost", 50);
+
+    clicks = 0;
+    clickPower = 1;
+    powerUpgradeCost = 10;
+    savedCounts = [];
+    savedTotal = 0;
+    cpsPercentage = 5;
+    cpsUpgradeCost = 50;
+
+    updateDisplays();
 }
 
 function increment() {
@@ -69,7 +101,7 @@ function save() { // Adds the saved click value to the array of saved clicks, an
 }
 
 function calculateCPS() { // Calculates by checking how much your clicks have changed every second (cant show negative numbers)
-    dcps = Math.max(Math.floor(clicks - lastClickCount), 0);
+    cps = Math.max(Math.floor(clicks - lastClickCount), 0);
     lastClickCount = clicks;
 }
 
@@ -77,3 +109,4 @@ function calculateCPS() { // Calculates by checking how much your clicks have ch
 setInterval(autoIncrementByCPS, 1000) // Increments CPS by the value determined by the function every second
 setInterval(calculateCPS, 1000); // Sets the calculateCPS function to get the avg amount your clicks changed over a second (1000ms)
 setInterval(updateDisplays, 100); // Updates all the different numbers 10 times a second 
+setInterval(saveGame, 1000) // Saves the game every second

@@ -48,6 +48,10 @@ button {
   background: #660063;
 }
 
+#reset-btn {
+  background-color: red;
+}
+
 .button-grid {
   display: grid;
   grid-template-columns: 1fr 2fr; /* 2 parts the grid, left takes 1/3 of space, and rigth takes 2/3 */
